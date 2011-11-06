@@ -1,6 +1,6 @@
 %define oname	ffmpeg
 %define version	0.7.7
-%define release %mkrel 1
+%define release %mkrel 2
 %define major	52
 
 %define libname %mklibname %oname %major
@@ -192,8 +192,7 @@ Requires:       %{postproclibname} >= %{version}-%release
 Requires:       %{swslibname} = %{version}-%release
 %endif
 Requires:	%{filterlibname} = %{version}-%release
-Provides:       libffmpeg-devel = %{version}-%{release}
-Provides:	ffmpeg-devel = %{version}-%{release}
+Provides:	ffmpeg0.7-devel = %{version}-%{release}
 Obsoletes: %mklibname -d %oname 51
 Conflicts: %mklibname -d %oname
 
@@ -211,7 +210,7 @@ Install libffmpeg-devel if you want to compile apps with ffmpeg support.
 Group:          Development/C
 Summary:        Static library for the ffmpeg codec library
 Requires:       %develname = %{version}-%release
-Provides:       libffmpeg-static-devel = %{version}-%{release}
+Provides:       ffmpeg0.7-static-devel = %{version}-%{release}
 Obsoletes: %mklibname -s -d %oname 51
 Conflicts: %mklibname -s -d %oname
 
