@@ -1,11 +1,9 @@
-%define name	ffmpeg
-%define version	0.7.5
-%define svn 22960
-%define prerel	0
+%define oname	ffmpeg
+%define version	0.7.7
 %define release %mkrel 1
 %define major	52
 
-%define libname %mklibname %name %major
+%define libname %mklibname %oname %major
 %define develname %mklibname %name -d
 %define staticname %mklibname %name -s -d
 
@@ -35,18 +33,18 @@
 %define build_faac	0
 %{?_with_faac: %{expand: %%global build_faac 1}}
 %{?_without_faac: %{expand: %%global build_faac 0}}
-Name: 	 	%{name}
+Name: 	 	%{oname}0.7
 Version: 	%{version}
 Release: 	%{release}%{?extrarelsuffix}
 Summary: 	Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
-Source0: 	http://ffmpeg.org/releases/%{name}-%version.tar.bz2
+Source0: 	http://ffmpeg.org/releases/%{oname}-%version.tar.bz2
 %if %build_plf
 License: 	GPLv3+
 %else
 License: 	GPLv2+
 %endif
 Group: 	 	Video
-BuildRoot: 	%{_tmppath}/%{name}-buildroot
+BuildRoot: 	%{_tmppath}/%{oname}-buildroot
 BuildRequires:  texi2html
 BuildRequires:	SDL-devel
 BuildRequires:	libtheora-devel
@@ -75,7 +73,7 @@ BuildRequires: opencore-amr-devel
 %if %build_faac
 BuildRequires: libfaac-devel
 %endif
-Requires:	%postproclibname = %version-%release
+Requires:	%postproclibname >= %version-%release
 Requires:	%libname = %version-%release
 Requires:	%avflibname = %version-%release
 Requires:	%avulibname = %version-%release
@@ -189,14 +187,15 @@ Summary:        Header files for the ffmpeg codec library
 Requires:       %{libname} = %{version}-%release
 Requires:       %{avflibname} = %{version}-%release
 Requires:       %{avulibname} = %{version}-%release
-Requires:       %{postproclibname} = %{version}-%release
+Requires:       %{postproclibname} >= %{version}-%release
 %if %build_swscaler
 Requires:       %{swslibname} = %{version}-%release
 %endif
 Requires:	%{filterlibname} = %{version}-%release
 Provides:       libffmpeg-devel = %{version}-%{release}
 Provides:	ffmpeg-devel = %{version}-%{release}
-Obsoletes: %mklibname -d %name 51
+Obsoletes: %mklibname -d %oname 51
+Conflicts: %mklibname -d %oname
 
 %description -n %develname
 ffmpeg is a hyper fast realtime audio/video encoder, a streaming  server
@@ -213,7 +212,8 @@ Group:          Development/C
 Summary:        Static library for the ffmpeg codec library
 Requires:       %develname = %{version}-%release
 Provides:       libffmpeg-static-devel = %{version}-%{release}
-Obsoletes: %mklibname -s -d %name 51
+Obsoletes: %mklibname -s -d %oname 51
+Conflicts: %mklibname -s -d %oname
 
 %description -n %staticname
 ffmpeg is a hyper fast realtime audio/video encoder, a streaming  server
@@ -227,7 +227,7 @@ Install libffmpeg-devel if you want to compile apps with ffmpeg support.
 
 %prep
 
-%setup -q -n %{name}-%version
+%setup -q -n %{oname}-%version
 
 %build
 %define Werror_cflags %nil
@@ -277,48 +277,21 @@ pushd %buildroot/%_libdir/libavcodec && ln -sf ../libavcodec.a && popd
 install -d %buildroot/%_libdir/libavformat
 pushd %buildroot/%_libdir/libavformat && ln -sf ../libavformat.a && popd
 
+#gw don't package these:
+rm -rf %buildroot{%_bindir,%_mandir/man1,%_datadir/%oname}
+#gw same major as in ffmpeg 0.8.x, use that one instead
+rm -f %buildroot%{_libdir}/libpostproc.so.%{postprocmajor}*
+
 %clean
 rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%post -n %{avflibname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{avflibname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%post -n %{avulibname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{avulibname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%post -n %{swslibname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{swslibname} -p /sbin/ldconfig
-%endif
-
-%files
-%defattr(-,root,root)
-%doc INSTALL README doc/*.html doc/*.txt doc/TODO doc/*.conf
-%{_bindir}/*
-%_mandir/man1/*
-%_datadir/ffmpeg
 
 %files -n %{libname}
 %defattr(-,root,root)
 %{_libdir}/libavcodec.so.%{major}*
 
-%files -n %postproclibname
-%defattr(-,root,root)
-%{_libdir}/libpostproc.so.%{postprocmajor}*
+#%files -n %postproclibname
+#%defattr(-,root,root)
+#%{_libdir}/libpostproc.so.%{postprocmajor}*
 
 %files -n %{avflibname}
 %defattr(-,root,root)
@@ -341,6 +314,7 @@ rm -rf %{buildroot}
 
 %files -n %develname
 %defattr(-,root,root)
+%doc INSTALL README doc/*.html doc/*.txt doc/TODO doc/*.conf
 %{_includedir}/libavcodec
 %{_includedir}/libavdevice
 %{_includedir}/libavformat
