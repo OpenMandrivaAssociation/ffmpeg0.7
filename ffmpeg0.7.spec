@@ -1,6 +1,6 @@
 %define oname	ffmpeg
-%define version	0.7.7
-%define release %mkrel 2
+%define version	0.7.8
+%define release %mkrel 1
 %define major	52
 
 %define libname %mklibname %oname %major
