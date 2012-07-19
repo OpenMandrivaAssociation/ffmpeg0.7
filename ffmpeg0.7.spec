@@ -49,7 +49,7 @@ BuildRequires:  texi2html
 BuildRequires:	SDL-devel
 BuildRequires:	libtheora-devel
 BuildRequires:	libvorbis-devel
-BuildRequires:	libjackit-devel
+BuildRequires:	jackit-devel
 BuildRequires:	libdc1394-devel
 BuildRequires:	libschroedinger-devel
 BuildRequires:	libvpx-devel
