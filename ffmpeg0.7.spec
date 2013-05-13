@@ -1,6 +1,6 @@
 %define oname	ffmpeg
 %define version	0.7.13
-%define release 2
+%define release  3
 %define major	52
 
 %define libname %mklibname %oname %major
@@ -44,7 +44,6 @@ License: 	GPLv3+
 License: 	GPLv2+
 %endif
 Group: 	 	Video
-BuildRoot: 	%{_tmppath}/%{oname}-buildroot
 BuildRequires:  texi2html
 BuildRequires:	SDL-devel
 BuildRequires:	pkgconfig(theora)
