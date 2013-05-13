@@ -47,14 +47,14 @@ Group: 	 	Video
 BuildRoot: 	%{_tmppath}/%{oname}-buildroot
 BuildRequires:  texi2html
 BuildRequires:	SDL-devel
-BuildRequires:	libtheora-devel
-BuildRequires:	libvorbis-devel
+BuildRequires:	pkgconfig(theora)
+BuildRequires:	pkgconfig(vorbis)
 BuildRequires:	jackit-devel
-BuildRequires:	libdc1394-devel
-BuildRequires:	libschroedinger-devel
-BuildRequires:	libvpx-devel
+BuildRequires:	pkgconfig(libdc1394-2)
+BuildRequires:	pkgconfig(schroedinger-1.0)
+BuildRequires:	pkgconfig(vpx)
 BuildRequires:	jpeg-devel
-BuildRequires:	libpng-devel
+BuildRequires:	pkgconfig(libpng)
 BuildRequires:	bzip2-devel
 BuildRequires:	rtmp-devel
 BuildRequires:	yasm
@@ -62,7 +62,7 @@ BuildRequires:	yasm
 BuildRequires:	vdpau-devel
 %endif
 %if %{mdkversion} >= 200910
-BuildRequires:	libva-devel
+BuildRequires:	pkgconfig(libva)
 %endif
 URL:		http://ffmpeg.org/
 %if %build_plf
@@ -71,7 +71,7 @@ BuildRequires: liblame-devel
 BuildRequires: opencore-amr-devel
 %endif
 %if %build_faac
-BuildRequires: libfaac-devel
+BuildRequires: faac-devel = 1:1.28-6
 %endif
 Requires:	%postproclibname >= %version-%release
 Requires:	%libname = %version-%release
