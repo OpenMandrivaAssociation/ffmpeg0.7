@@ -45,7 +45,7 @@ License: 	GPLv2+
 %endif
 Group: 	 	Video
 BuildRequires:  texi2html
-BuildRequires:	SDL-devel
+BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(theora)
 BuildRequires:	pkgconfig(vorbis)
 BuildRequires:	jackit-devel
