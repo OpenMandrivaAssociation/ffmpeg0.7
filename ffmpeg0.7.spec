@@ -63,7 +63,7 @@ BuildRequires:	vdpau-devel
 %if %{mdkversion} >= 200910
 BuildRequires:	pkgconfig(libva)
 %endif
-URL:		http://ffmpeg.org/
+URL:		https://ffmpeg.org/
 %if %build_plf
 BuildRequires: x264-devel >= 0.115
 BuildRequires: liblame-devel
