@@ -44,6 +44,11 @@ License: 	GPLv3+
 License: 	GPLv2+
 %endif
 Group: 	 	Video
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:  texi2html
 BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(theora)
